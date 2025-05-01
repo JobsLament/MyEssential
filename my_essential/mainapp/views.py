@@ -24,3 +24,30 @@ def get_spotify_oauth():
         scope="user-top-read user-read-recently-played",
         cache_path=None
     )
+
+def spotify_login(request):
+    try:
+        sp_oauth = get_spotify_oauth()
+        auth_url = sp_oauth.get_authorize_url()
+        return redirect(auth_url)
+    except Exception as e:
+        return HttpResponse(f"Error generating auth URL: {str(e)}", status=500)
+
+
+def spotify_callback(request):
+    try:
+        code = request.GET.get('code')
+        if not code:
+            return HttpResponseBadRequest("Authorization code missing")
+
+        sp_oauth = get_spotify_oauth()
+        token_info = sp_oauth.get_access_token(code)
+        
+        if not token_info:
+            return HttpResponseBadRequest("Failed to get access token")
+
+        # Добавляем параметр year для выбора года
+        return redirect(f'/album-matrix/?token={token_info["access_token"]}&year=2024')
+    
+    except Exception as e:
+        return HttpResponse(f"Error: {str(e)}", status=500)
