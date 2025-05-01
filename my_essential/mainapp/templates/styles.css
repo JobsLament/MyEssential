@@ -1,0 +1,237 @@
+body {
+    font-family: 'Cormorant Garamond', serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/img/12.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 48px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+p {
+    font-size: 100px;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 800px;
+    margin: 100px auto;
+    color: white;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin-top: -400px;
+    position: relative; /* Добавляем для позиционирования окна */
+}
+
+/* Стили для about */
+.about {
+    position: fixed;
+    top: -90px;
+    right: 20px; /* Перенесли в левый угол */
+    font-size: 40px;
+    color: black;
+    cursor: pointer;
+    z-index: 1000;
+    transition: color 0.3s ease;
+}
+
+/* Изменение цвета текста при наведении */
+.about:hover {
+    color: white;
+}
+
+.collage-btn {
+    font-family: 'Cormorant Garamond', serif;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Отступ между текстом и изображением */
+    background-color: black;
+    color: white;
+    padding: 12px 20px;
+    font-size: 30px;
+    border: none;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.collage-btn:hover {
+    transform: scale(1.1);
+}
+
+.collage-btn img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.9s ease;
+}
+
+.window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    background-color: black;
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
+
+.window.open {
+    width: 750px; /* Фиксированная ширина */
+    height: 300px; /* Фиксированная высота */
+    opacity: 1;
+}
+
+@keyframes appear-from-shadow {
+    0% {
+        opacity: 0; /* Начальная прозрачность */
+        text-shadow: 0 0 20px rgba(0, 0, 0, 0.8); /* Начальная тень */
+    }
+    100% {
+        opacity: 1; /* Полная видимость */
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0); /* Конечная тень (без тени) */
+    }
+}
+
+.window-top-text {
+    position: absolute;
+    top: -60px;
+    opacity: 0;
+    animation: appear-from-shadow 1s ease-out forwards;
+    font-size: 30px; /* Размер текста */
+    text-align: center; /* Выравнивание текста по центру */
+    margin: 100px 200px; /* Убираем отступы */
+}
+
+.corner-image {
+    position: absolute; /* Абсолютное позиционирование */
+    bottom: 0px; /* Отступ снизу */
+    left: 0px; /* Отступ слева */
+    width: 200px; /* Размер изображения */
+    height: 200px; /* Размер изображения */
+    object-fit: cover; /* Сохраняет пропорции изображения */
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+}
+
+.close-btn:hover {
+    color: #817d7d;
+}
+
+/* Стили для полукруга */
+.semi-circle {
+    position: fixed;
+    top: -100px;
+    right: -100px;
+    width: 200px;
+    height: 200px;
+    background-color: black;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* Стили для черного фона */
+.black-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 998;
+}
+
+/* Анимация появления полукруга и черного фона */
+.about:hover ~ .semi-circle {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.about:hover ~ .black-overlay {
+    opacity: 1;
+}
+
+/* Стили для контента на черном фоне */
+.content-on-black {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Стили для картинки */
+.content-image {
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    border-radius: 14px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+}
+
+/* Стили для описания */
+.content-description {
+    font-size: 34px;
+    color: white;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
+
+}
+
+/* Анимация появления контента */
+.black-overlay.active ~ .content-on-black {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.black-overlay.active ~ .content-on-black .content-image {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.black-overlay.active ~ .content-on-black .content-description {
+    opacity: 1;
+    transform: translateX(0);
+}
