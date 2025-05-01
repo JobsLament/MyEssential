@@ -62,3 +62,44 @@ def download_album_cover(url, cover_size):
         return cover_image.resize((cover_size-10, cover_size-10))
     except:
         return None
+
+
+
+def analyze_listening_habits(sp, top_tracks, time_range='2024'):
+    """Анализирует привычки прослушивания и возвращает статистику"""
+    # Счетчики для различных категорий
+    artist_counter = Counter()
+    album_counter = Counter()
+    genre_counter = Counter()
+    
+    for track in top_tracks:
+        # Подсчет артистов
+        for artist in track['artists']:
+            artist_counter[artist['name']] += 1
+        
+        # Подсчет альбомов
+        album_counter[track['album']['name']] += 1
+    
+    # Получаем информацию о жанрах от артистов
+    artist_ids = list(set([artist['id'] for track in top_tracks for artist in track['artists']]))
+    artist_chunks = [artist_ids[i:i+50] for i in range(0, len(artist_ids), 50)]
+    artists_info = []
+    
+    for chunk in artist_chunks:
+        artists_info.extend(sp.artists(chunk)['artists'])
+    
+    for artist in artists_info:
+        for genre in artist.get('genres', []):
+            genre_counter[genre] += 1
+    
+    # Собираем и возвращаем статистику
+    stats = {
+        'top_artists': artist_counter.most_common(5),
+        'top_albums': album_counter.most_common(3),
+        'top_genres': genre_counter.most_common(5),
+        'total_top_artists': len(artist_counter),
+        'total_top_albums': len(album_counter),
+        'total_top_genres': len(genre_counter)
+    }
+    
+    return stats
