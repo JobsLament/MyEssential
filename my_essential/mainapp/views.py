@@ -25,6 +25,7 @@ def get_spotify_oauth():
         cache_path=None
     )
 
+
 def spotify_login(request):
     try:
         sp_oauth = get_spotify_oauth()
@@ -51,3 +52,13 @@ def spotify_callback(request):
     
     except Exception as e:
         return HttpResponse(f"Error: {str(e)}", status=500)
+
+
+def download_album_cover(url, cover_size):
+    """Потокобезопасная загрузка обложки альбома"""
+    try:
+        response = requests.get(url, timeout=3)
+        cover_image = Image.open(BytesIO(response.content))
+        return cover_image.resize((cover_size-10, cover_size-10))
+    except:
+        return None
