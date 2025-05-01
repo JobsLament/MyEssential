@@ -14,3 +14,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 </head>
+<body>
+<p>/MY/ ESSENTIAL</p>
+<p class="about">about</p>
+<div class="semi-circle" id="semiCircle"></div>
+<div class="black-overlay" id="blackOverlay"></div>
+
+<!-- Кнопка с изображением и модальное окно -->
+<div class="button-container">
+    <button class="collage-btn" id="collageButton" onclick="startAuthentication()">
+        collage it
+        <img src="{% static "img/spoti.png" %}" alt="Spotify logo">
+    </button>
+
+    <!-- Модальное окно -->
+    <div class="window" id="window">
+        <p class="window-top-text">Just wait</p>
+        <button class="close-btn" id="closeButton">×</button>
+        <img src="{% static 'img/setfire.jpg' %}" alt="image" class="corner-image" loading="lazy">
+    </div>
+</div>
+
+<!-- Контент на черном фоне -->
+<div class="content-on-black" id="contentOnBlack">
+    <img src='{% static "img/me.jpg" %}' alt="Your Image" class="content-image" loading="lazy">
+    <p class="content-description">Hello, everyone. My name is Nail, this is my website</p>
+</div>
+
+<!-- scripts -->
+<script src="{% static 'js/button.js' %}" defer></script>
+<script src="{% static 'js/authentication.js' %}" defer></script>
+</body>
+</html>
